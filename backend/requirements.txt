@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic
+httpx
+python-dotenv
+sentence-transformers
+chromadb
+anthropic
+ollama
+Pillow
