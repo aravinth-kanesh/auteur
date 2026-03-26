@@ -1,6 +1,6 @@
-# Auteur — Your Personal Cinema Intelligence
+# Auteur: Your Personal Cinema Intelligence
 
-A personal taste engine that learns what makes *you* a cinephile. Log every film, rate it, and let Auteur build a genuine model of your cinematic sensibility. Ask it anything — "Why do I always rate Villeneuve so highly?" or "Am I in a genre rut?" — and it answers by reasoning over your own watch history.
+A personal taste engine that learns what makes *you* a cinephile. Log every film, rate it, and let Auteur build a genuine model of your cinematic sensibility. Ask it anything: "Why do I always rate Villeneuve so highly?" or "Am I in a genre rut?" It answers by reasoning over your own watch history.
 
 **Stack**: FastAPI · SQLite · sentence-transformers · ChromaDB · Ollama (local LLM) · React · Tailwind CSS · Recharts
 
@@ -72,18 +72,18 @@ The app will be available at `http://localhost:5173`.
 ## Features
 
 ### Core
-- **Film Search** — TMDB-powered search with live autocomplete and poster thumbnails
-- **Film Logging** — Rate 1–10, add notes, stores full metadata and poster
-- **Watch History** — Filterable grid by genre, decade, minimum rating; sortable by date/rating/title
-- **Taste Profile** — Genre donut chart, decade preference bars, director affinity, AI-generated cinematic identity paragraph
-- **Film Brain Chat** — Full conversational RAG interface; asks are answered by reasoning over your actual watch history using local embeddings + LLM
+- **Film Search**: TMDB-powered search with live autocomplete and poster thumbnails
+- **Film Logging**: Rate 1-10, add notes, stores full metadata and poster
+- **Watch History**: Filterable grid by genre, decade, minimum rating; sortable by date/rating/title
+- **Taste Profile**: Genre donut chart, decade preference bars, director affinity, generated cinematic identity paragraph
+- **Film Brain Chat**: Full conversational RAG interface; questions are answered by reasoning over your actual watch history using local embeddings and an LLM
 
 ### How the intelligence works
 1. Every film you log is embedded via `all-MiniLM-L6-v2` (runs locally, no API needed)
 2. Embeddings are stored in a local ChromaDB vector store
 3. When you ask a question, it's embedded and the most relevant films from your history are retrieved
-4. Retrieved films + your taste stats are injected into the LLM context
-5. The LLM answers by reasoning over *your* films — not generic knowledge
+4. Retrieved films and your taste stats are injected into the LLM context
+5. The LLM answers by reasoning over *your* films, not generic knowledge
 
 ---
 
@@ -92,14 +92,14 @@ The app will be available at `http://localhost:5173`.
 ```
 auteur/
 ├── backend/
-│   ├── main.py          # FastAPI app + all routes
+│   ├── main.py          # FastAPI app and all routes
 │   ├── database.py      # SQLAlchemy models
 │   ├── models.py        # Pydantic schemas
 │   ├── tmdb.py          # TMDB API client
 │   ├── embeddings.py    # sentence-transformers pipeline
 │   ├── vector_store.py  # ChromaDB wrapper
 │   ├── taste_engine.py  # Analysis: directors, genres, decades, LLM summaries
-│   ├── llm.py           # LLM abstraction + RAG pipeline (Ollama → Anthropic fallback)
+│   ├── llm.py           # LLM abstraction and RAG pipeline (Ollama with Anthropic fallback)
 │   └── requirements.txt
 └── frontend/
     └── src/

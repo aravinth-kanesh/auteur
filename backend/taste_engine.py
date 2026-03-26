@@ -173,7 +173,7 @@ async def get_taste_summary(db: Session, llm_fn) -> str | None:
         "Based on this person's top-rated films:\n\n"
         + "\n".join(film_lines)
         + f"\n\nFavourite directors: {top_dir_str or 'various'}\n\n"
-        "Write a 2-3 sentence paragraph describing their cinematic identity — "
+        "Write a 2-3 sentence paragraph describing their cinematic identity: "
         "their tastes, what they value in film, their sensibility. "
         "Be evocative and specific. Write in second person ('You are...')."
     )

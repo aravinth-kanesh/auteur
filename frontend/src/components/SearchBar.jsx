@@ -106,7 +106,7 @@ export default function SearchBar({ onSelect, placeholder = 'Search for a film..
                   <p className="text-text text-sm font-medium truncate group-hover:text-gold transition-colors">
                     {film.title}
                   </p>
-                  <p className="text-muted text-xs">{film.year || '—'}</p>
+                  <p className="text-muted text-xs">{film.year || '-'}</p>
                   {film.overview && (
                     <p className="text-muted text-xs mt-0.5 line-clamp-1">{film.overview}</p>
                   )}

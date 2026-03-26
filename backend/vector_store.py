@@ -24,7 +24,7 @@ def _get_collection():
 
 def add_film(embedding_id: str, embedding: list[float], metadata: dict) -> None:
     col = _get_collection()
-    # Chroma metadata values must be str/int/float/bool — no lists
+    # Chroma metadata values must be str/int/float/bool, not lists
     safe_meta = {}
     for k, v in metadata.items():
         if isinstance(v, list):

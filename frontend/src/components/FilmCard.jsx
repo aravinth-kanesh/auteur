@@ -32,7 +32,7 @@ export default function FilmCard({ film, onDelete, onClick }) {
           {film.title}
         </h3>
         <p className="text-muted text-xs mt-0.5 font-mono">
-          {film.year || '—'}{film.director ? ` · ${film.director}` : ''}
+          {film.year || '-'}{film.director ? ` · ${film.director}` : ''}
         </p>
         {film.genres && film.genres.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-2">

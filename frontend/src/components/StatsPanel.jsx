@@ -8,7 +8,7 @@ function StatCard({ icon: Icon, label, value, sub }) {
         <Icon className="w-4 h-4" />
         <span className="text-xs uppercase tracking-widest font-mono">{label}</span>
       </div>
-      <p className="text-text font-display text-2xl font-bold">{value ?? '—'}</p>
+      <p className="text-text font-display text-2xl font-bold">{value ?? '-'}</p>
       {sub && <p className="text-muted text-xs font-mono">{sub}</p>}
     </div>
   )

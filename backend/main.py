@@ -102,7 +102,7 @@ async def log_film(
     if not details:
         raise HTTPException(status_code=404, detail="Film not found on TMDB")
 
-    # Check if already logged — update if so
+    # Check if already logged, update if so
     existing = db.query(WatchedFilm).filter(WatchedFilm.tmdb_id == req.tmdb_id).first()
     if existing:
         existing.user_rating = req.user_rating
