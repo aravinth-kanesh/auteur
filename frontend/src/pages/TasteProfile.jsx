@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -57,6 +57,8 @@ const CustomTooltip = ({ active, payload }) => {
 export default function TasteProfile() {
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [decadeTooltipPos, setDecadeTooltipPos] = useState(undefined)
+  const activeDecadeRef = useRef(null)
 
   useEffect(() => {
     const cached = JSON.parse(localStorage.getItem('auteur_profile_cache') || 'null')
@@ -159,11 +161,23 @@ export default function TasteProfile() {
           <div className="bg-surface border border-border rounded-2xl p-6">
             <h3 className="text-text font-semibold mb-4">By Decade</h3>
             <ResponsiveContainer width="100%" height={220}>
-              <BarChart data={profile.decade_preference} barCategoryGap="20%">
+              <BarChart
+                data={profile.decade_preference}
+                barCategoryGap="20%"
+                onMouseMove={(state) => {
+                  if (!state.isTooltipActive || !state.activePayload?.length) return
+                  const decade = state.activePayload[0].payload.decade
+                  if (decade !== activeDecadeRef.current) {
+                    activeDecadeRef.current = decade
+                    setDecadeTooltipPos({ x: state.activeCoordinate.x, y: state.activeCoordinate.y })
+                  }
+                }}
+                onMouseLeave={() => { activeDecadeRef.current = null; setDecadeTooltipPos(undefined) }}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="#2A2A2A" vertical={false} />
                 <XAxis dataKey="decade" tick={{ fill: '#6B6B6B', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: '#6B6B6B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <Tooltip content={<CustomTooltip />} cursor={false} isAnimationActive={false} />
+                <Tooltip content={<CustomTooltip />} cursor={false} isAnimationActive={false} position={decadeTooltipPos} />
                 <Bar dataKey="avg_rating" fill="#F5A623" radius={[4, 4, 0, 0]} isAnimationActive={false} activeBar={{ fill: '#FFBE4A' }} />
               </BarChart>
             </ResponsiveContainer>

@@ -29,7 +29,7 @@ export default function FilmCard({ film, onDelete, onClick }) {
         <h3 className="font-display text-sm font-semibold text-text leading-snug line-clamp-1">
           {film.title}
         </h3>
-        <p className="text-muted text-xs mt-0.5 font-mono">
+        <p className="text-muted text-xs mt-0.5 font-mono truncate">
           {film.year || '-'}{film.director ? ` · ${film.director}` : ''}
         </p>
         {film.genres && film.genres.length > 0 && (

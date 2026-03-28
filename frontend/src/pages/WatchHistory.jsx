@@ -57,15 +57,20 @@ export default function WatchHistory() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 mb-6 p-4 bg-surface border border-border rounded-xl">
-        <AdjustmentsHorizontalIcon className="w-4 h-4 text-muted" />
+      <div className="flex flex-wrap items-center gap-4 mb-6 p-4 bg-surface border border-border rounded-xl">
+        <div className="flex items-center gap-1.5 text-muted">
+          <AdjustmentsHorizontalIcon className="w-4 h-4" />
+          <span className="text-xs font-mono">Filters</span>
+        </div>
+
+        <div className="w-px h-4 bg-border" />
 
         <div className="flex items-center gap-2">
-          <label className="text-muted text-xs font-mono">Sort</label>
+          <label className="text-muted text-xs font-mono whitespace-nowrap">Sort</label>
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="bg-surface-2 border border-border text-text text-sm rounded-lg px-2 py-1.5 focus:outline-none focus:border-gold"
+            className="w-32 bg-surface-2 border border-border text-text text-sm rounded-lg px-2 py-1.5 focus:outline-none focus:border-gold"
           >
             {SORT_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>{o.label}</option>
@@ -73,8 +78,10 @@ export default function WatchHistory() {
           </select>
         </div>
 
+        <div className="w-px h-4 bg-border" />
+
         <div className="flex items-center gap-2">
-          <label className="text-muted text-xs font-mono">Min Rating</label>
+          <label className="text-muted text-xs font-mono whitespace-nowrap">Min Rating</label>
           <div className="flex items-center gap-1.5">
             <input
               type="range"
@@ -89,13 +96,15 @@ export default function WatchHistory() {
           </div>
         </div>
 
+        <div className="w-px h-4 bg-border" />
+
         {allGenres.length > 0 && (
           <div className="flex items-center gap-2">
             <label className="text-muted text-xs font-mono">Genre</label>
             <select
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
-              className="bg-surface-2 border border-border text-text text-sm rounded-lg px-2 py-1.5 focus:outline-none focus:border-gold"
+              className="w-32 bg-surface-2 border border-border text-text text-sm rounded-lg px-2 py-1.5 focus:outline-none focus:border-gold"
             >
               <option value="">All</option>
               {allGenres.map((g) => <option key={g} value={g}>{g}</option>)}
@@ -108,7 +117,7 @@ export default function WatchHistory() {
           <select
             value={decade}
             onChange={(e) => setDecade(e.target.value)}
-            className="bg-surface-2 border border-border text-text text-sm rounded-lg px-2 py-1.5 focus:outline-none focus:border-gold"
+            className="w-32 bg-surface-2 border border-border text-text text-sm rounded-lg px-2 py-1.5 focus:outline-none focus:border-gold"
           >
             <option value="">All</option>
             {DECADE_OPTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
