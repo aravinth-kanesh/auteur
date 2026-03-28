@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import create_engine, Column, Integer, Float, String, Text, Date, DateTime
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
@@ -31,7 +31,7 @@ class WatchedFilm(Base):
     user_notes = Column(Text)
     watched_date = Column(Date)
     embedding_id = Column(Text)    # ChromaDB doc id
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     def genres_list(self):
         return json.loads(self.genres) if self.genres else []
