@@ -140,7 +140,7 @@ export default function Dashboard() {
           to="/taste"
           className="bg-surface border border-border rounded-2xl p-5 hover:border-gold/40 transition-all group"
         >
-          <div className="flex gap-0.5 mb-3">
+          <div className="flex items-end gap-0.5 mb-3">
             {[8, 5, 9, 4, 7].map((h, i) => (
               <div
                 key={i}
@@ -151,7 +151,7 @@ export default function Dashboard() {
           </div>
           <h3 className="text-text font-semibold">Taste Profile</h3>
           <p className="text-muted text-sm mt-1">
-            Genre breakdown, director affinity, decade preferences, and hidden patterns.
+            Genre breakdown, director affinity, decade preferences, hidden patterns.
           </p>
           <span className="text-gold text-sm font-mono mt-2 inline-block group-hover:translate-x-1 transition-transform">
             View profile →
