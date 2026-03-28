@@ -75,7 +75,7 @@ export default function TasteProfile() {
     )
   }
 
-  if (!profile || profile.total_films === 0) {
+  if (!profile || profile.top_films?.length === 0) {
     return (
       <div className="p-8 text-center py-20 text-muted">
         <p className="font-display text-xl">Not enough data yet.</p>

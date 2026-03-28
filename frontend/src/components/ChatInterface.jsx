@@ -153,9 +153,9 @@ export default function ChatInterface() {
         {messages.length > 0 && (
           <button
             onClick={clearHistory}
-            className="text-muted hover:text-text-dim text-xs font-mono transition-colors"
+            className="text-xs font-mono px-3 py-1.5 rounded-lg border border-border text-muted hover:text-text hover:border-gold/40 transition-all"
           >
-            Clear history
+            Clear chat
           </button>
         )}
       </div>
