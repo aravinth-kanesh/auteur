@@ -59,9 +59,32 @@ export default function TasteProfile() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/taste')
+    const cached = JSON.parse(localStorage.getItem('auteur_profile_cache') || 'null')
+
+    fetch('/api/stats')
       .then((r) => r.json())
-      .then((d) => { setProfile(d); setLoading(false) })
+      .then((stats) => {
+        const currentCount = stats.total_films ?? 0
+        if (cached && cached.filmCount === currentCount && cached.profile) {
+          setProfile(cached.profile)
+          setLoading(false)
+          return
+        }
+
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 60000)
+        fetch('/api/taste', { signal: controller.signal })
+          .then((r) => r.json())
+          .then((d) => {
+            setProfile(d)
+            localStorage.setItem('auteur_profile_cache', JSON.stringify({
+              filmCount: currentCount,
+              profile: d,
+            }))
+          })
+          .catch(() => {})
+          .finally(() => { clearTimeout(timeout); setLoading(false) })
+      })
       .catch(() => setLoading(false))
   }, [])
 
