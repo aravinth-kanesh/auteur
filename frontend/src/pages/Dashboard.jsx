@@ -22,29 +22,29 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
-    // Use cached summary unless the film count has changed
-    const cached = JSON.parse(localStorage.getItem('auteur_taste_cache') || 'null')
+    // Share the same cache as TasteProfile so the text is always identical
+    const cached = JSON.parse(localStorage.getItem('auteur_profile_cache') || 'null')
 
     fetch('/api/stats')
       .then((r) => r.json())
       .then((stats) => {
         const currentCount = stats.total_films ?? 0
-        if (cached && cached.filmCount === currentCount && cached.summary) {
-          setTasteSummary(cached.summary)
+        if (cached && cached.filmCount === currentCount && cached.profile?.taste_summary) {
+          setTasteSummary(cached.profile.taste_summary)
           setLoadingSummary(false)
           return
         }
 
-        // Film count changed or no cache — re-fetch
+        // Film count changed or no cache — re-fetch and populate shared cache
         const controller = new AbortController()
         const timeout = setTimeout(() => controller.abort(), 60000)
         fetch('/api/taste', { signal: controller.signal })
           .then((r) => r.json())
           .then((data) => {
             setTasteSummary(data.taste_summary)
-            localStorage.setItem('auteur_taste_cache', JSON.stringify({
+            localStorage.setItem('auteur_profile_cache', JSON.stringify({
               filmCount: currentCount,
-              summary: data.taste_summary,
+              profile: data,
             }))
           })
           .catch(() => {})
