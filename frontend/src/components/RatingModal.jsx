@@ -15,10 +15,12 @@ export default function RatingModal({ film, onClose, onLogged }) {
 
   useEffect(() => {
     if (!film) return
-    fetch(`/api/film/${film.tmdb_id}`)
+    const controller = new AbortController()
+    fetch(`/api/film/${film.tmdb_id}`, { signal: controller.signal })
       .then((r) => r.json())
       .then((d) => { setDetails(d); setLoadingDetails(false) })
-      .catch(() => { setDetails(film); setLoadingDetails(false) })
+      .catch((e) => { if (e.name !== 'AbortError') { setDetails(film); setLoadingDetails(false) } })
+    return () => controller.abort()
   }, [film?.tmdb_id])
 
   // Close on Escape
