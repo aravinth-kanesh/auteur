@@ -7,8 +7,9 @@ const PLACEHOLDER = 'https://via.placeholder.com/500x750/1A1A1A/6B6B6B?text=No+P
 
 export default function RatingModal({ film, onClose, onLogged }) {
   const [details, setDetails] = useState(null)
-  const [rating, setRating] = useState(7)
-  const [notes, setNotes] = useState('')
+  const isEdit = !!film?.user_rating
+  const [rating, setRating] = useState(film?.user_rating ?? 7)
+  const [notes, setNotes] = useState(film?.user_notes ?? '')
   const [submitting, setSubmitting] = useState(false)
   const [loadingDetails, setLoadingDetails] = useState(true)
 
@@ -44,7 +45,7 @@ export default function RatingModal({ film, onClose, onLogged }) {
       })
       if (!resp.ok) throw new Error('Failed to log')
       const logged = await resp.json()
-      toast.success(`Logged "${logged.title}"`)
+      toast.success(isEdit ? `Updated "${logged.title}"` : `Logged "${logged.title}"`)
       onLogged(logged)
       onClose()
     } catch (err) {
@@ -162,7 +163,7 @@ export default function RatingModal({ film, onClose, onLogged }) {
                 disabled={submitting}
                 className="mt-3 w-full bg-gold text-bg font-semibold py-2.5 rounded-lg hover:bg-gold-dim transition-colors disabled:opacity-50 text-sm"
               >
-                {submitting ? 'Logging...' : 'Log Film'}
+                {submitting ? (isEdit ? 'Saving...' : 'Logging...') : (isEdit ? 'Update Rating' : 'Log Film')}
               </button>
             </div>
           </div>

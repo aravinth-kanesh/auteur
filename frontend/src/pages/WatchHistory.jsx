@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import FilmCard from '../components/FilmCard'
+import RatingModal from '../components/RatingModal'
 import toast from 'react-hot-toast'
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
 
@@ -14,6 +15,7 @@ const DECADE_OPTIONS = ['1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2
 export default function WatchHistory() {
   const [films, setFilms] = useState([])
   const [loading, setLoading] = useState(true)
+  const [editingFilm, setEditingFilm] = useState(null)
   const [sort, setSort] = useState('date')
   const [minRating, setMinRating] = useState(1)
   const [decade, setDecade] = useState('')
@@ -138,6 +140,14 @@ export default function WatchHistory() {
         )}
       </div>
 
+      {editingFilm && (
+        <RatingModal
+          film={editingFilm}
+          onClose={() => setEditingFilm(null)}
+          onLogged={() => { setEditingFilm(null); fetchFilms() }}
+        />
+      )}
+
       {loading ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {Array.from({ length: 12 }).map((_, i) => (
@@ -152,7 +162,7 @@ export default function WatchHistory() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {films.map((f) => (
-            <FilmCard key={f.id} film={f} onDelete={handleDelete} />
+            <FilmCard key={f.id} film={f} onClick={setEditingFilm} onDelete={handleDelete} />
           ))}
         </div>
       )}
