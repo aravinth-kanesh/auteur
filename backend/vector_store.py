@@ -68,7 +68,6 @@ def delete_film(embedding_id: str) -> None:
 
 
 def get_all_embeddings() -> list[dict]:
-    """Return all stored embeddings with their metadata (for clustering)."""
     col = _get_collection()
     if col.count() == 0:
         return []
