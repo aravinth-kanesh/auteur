@@ -75,7 +75,7 @@ export default function Dashboard() {
               <div className="h-4 bg-surface-2 rounded animate-pulse w-4/5" />
             </div>
           ) : (
-            <p className="font-display text-lg text-text-dim leading-relaxed italic">
+            <p className="font-display text-lg text-text leading-relaxed italic">
               "{tasteSummary}"
             </p>
           )}
