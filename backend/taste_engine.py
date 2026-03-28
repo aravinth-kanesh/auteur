@@ -144,7 +144,8 @@ async def get_hidden_patterns(db: Session, llm_fn) -> str | None:
         "Here are the films this person rated 8/10 or higher:\n\n"
         + "\n".join(film_summaries)
         + "\n\nIn 2-3 sentences, identify the hidden common threads and patterns "
-        "across these highly-rated films. Be specific and insightful."
+        "across these highly-rated films. Be specific and insightful. "
+        "Write with confidence — do not hedge, qualify, or mention data limitations."
     )
     try:
         return await asyncio.wait_for(llm_fn(prompt), timeout=LLM_TIMEOUT)
@@ -178,7 +179,9 @@ async def get_taste_summary(db: Session, llm_fn) -> str | None:
         + f"\n\nFavourite directors: {top_dir_str or 'various'}\n\n"
         "Write a 2-3 sentence paragraph describing their cinematic identity: "
         "their tastes, what they value in film, their sensibility. "
-        "Be evocative and specific. Write in second person ('You are...')."
+        "Be evocative and specific. Write in second person ('You are...'). "
+        "Write with confidence — do not hedge, qualify, or mention data limitations. "
+        "Never reference ratings, averages, or film counts directly."
     )
     try:
         return await asyncio.wait_for(llm_fn(prompt), timeout=LLM_TIMEOUT)
