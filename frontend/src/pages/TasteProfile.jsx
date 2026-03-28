@@ -163,8 +163,8 @@ export default function TasteProfile() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#2A2A2A" vertical={false} />
                 <XAxis dataKey="decade" tick={{ fill: '#6B6B6B', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: '#6B6B6B', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="avg_rating" fill="#F5A623" radius={[4, 4, 0, 0]} cursor={false} />
+                <Tooltip content={<CustomTooltip />} cursor={false} />
+                <Bar dataKey="avg_rating" fill="#F5A623" radius={[4, 4, 0, 0]} isAnimationActive={false} />
               </BarChart>
             </ResponsiveContainer>
           </div>
