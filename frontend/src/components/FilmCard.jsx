@@ -4,17 +4,18 @@ const PLACEHOLDER = 'https://via.placeholder.com/342x513/1A1A1A/6B6B6B?text=No+P
 
 export default function FilmCard({ film, onDelete, onClick }) {
   const rating = film.user_rating
+  const interactive = !!(onClick || onDelete)
 
   return (
     <div
-      className="relative group rounded-xl overflow-hidden bg-surface border border-border cursor-pointer transition-all duration-200 hover:border-gold/40 hover:scale-[1.02] animate-fade-in"
+      className={`relative group rounded-xl overflow-hidden bg-surface border border-border animate-fade-in transition-all duration-200 ${interactive ? 'cursor-pointer hover:border-gold/40 hover:scale-[1.02]' : ''}`}
       onClick={() => onClick && onClick(film)}
     >
       <div className="relative poster-vignette aspect-[2/3] overflow-hidden">
         <img
           src={film.poster_path || PLACEHOLDER}
           alt={film.title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className={`w-full h-full object-cover transition-transform duration-300 ${interactive ? 'group-hover:scale-105' : ''}`}
           onError={(e) => { e.target.src = PLACEHOLDER }}
           loading="lazy"
         />

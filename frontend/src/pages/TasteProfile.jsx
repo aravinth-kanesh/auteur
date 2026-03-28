@@ -164,7 +164,7 @@ export default function TasteProfile() {
                 <XAxis dataKey="decade" tick={{ fill: '#6B6B6B', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: '#6B6B6B', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="avg_rating" fill="#F5A623" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="avg_rating" fill="#F5A623" radius={[4, 4, 0, 0]} cursor={false} />
               </BarChart>
             </ResponsiveContainer>
           </div>
