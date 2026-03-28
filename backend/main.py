@@ -199,6 +199,17 @@ def history(
 # Taste + Stats
 # ---------------------------------------------------------------------------
 
+@app.get("/api/taste/stats", response_model=TasteProfile)
+def taste_stats(db: Session = Depends(get_db)):
+    """Fast DB-only taste data — no LLM calls."""
+    return TasteProfile(
+        director_affinity=get_director_affinity(db),
+        genre_distribution=get_genre_distribution(db),
+        decade_preference=get_decade_preference(db),
+        top_films=[_to_response(f) for f in get_top_films(db, 10)],
+    )
+
+
 @app.get("/api/taste", response_model=TasteProfile)
 async def taste_profile(db: Session = Depends(get_db)):
     directors = get_director_affinity(db)

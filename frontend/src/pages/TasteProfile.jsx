@@ -56,7 +56,8 @@ const CustomTooltip = ({ active, payload }) => {
 
 export default function TasteProfile() {
   const [profile, setProfile] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loadingStats, setLoadingStats] = useState(true)
+  const [loadingSummary, setLoadingSummary] = useState(true)
   const [decadeTooltipPos, setDecadeTooltipPos] = useState(undefined)
   const activeDecadeRef = useRef(null)
 
@@ -67,12 +68,21 @@ export default function TasteProfile() {
       .then((r) => r.json())
       .then((stats) => {
         const currentCount = stats.total_films ?? 0
+
         if (cached && cached.filmCount === currentCount && cached.profile) {
           setProfile(cached.profile)
-          setLoading(false)
+          setLoadingStats(false)
+          setLoadingSummary(false)
           return
         }
 
+        // Fast fetch — charts and top films appear immediately
+        fetch('/api/taste/stats')
+          .then((r) => r.json())
+          .then((d) => { setProfile(d); setLoadingStats(false) })
+          .catch(() => setLoadingStats(false))
+
+        // Slow fetch — identity and hidden patterns load when LLM finishes
         const controller = new AbortController()
         const timeout = setTimeout(() => controller.abort(), 60000)
         fetch('/api/taste', { signal: controller.signal })
@@ -85,12 +95,12 @@ export default function TasteProfile() {
             }))
           })
           .catch(() => {})
-          .finally(() => { clearTimeout(timeout); setLoading(false) })
+          .finally(() => { clearTimeout(timeout); setLoadingSummary(false) })
       })
-      .catch(() => setLoading(false))
+      .catch(() => { setLoadingStats(false); setLoadingSummary(false) })
   }, [])
 
-  if (loading) {
+  if (loadingStats) {
     return (
       <div className="p-8 space-y-4">
         {[1, 2, 3].map((i) => (
@@ -113,17 +123,25 @@ export default function TasteProfile() {
     <div className="p-8 max-w-6xl space-y-8">
       <h1 className="font-display text-3xl font-bold text-text">Taste Profile</h1>
 
-      {profile.taste_summary && (
-        <div className="bg-surface border border-gold/20 rounded-2xl p-6">
-          <div className="flex items-center gap-2 mb-3">
-            <SparklesIcon className="w-4 h-4 text-gold" />
-            <p className="text-gold text-xs uppercase tracking-widest font-mono">Cinematic Identity</p>
+      <div className="bg-surface border border-gold/20 rounded-2xl p-6">
+        <div className="flex items-center gap-2 mb-3">
+          <SparklesIcon className="w-4 h-4 text-gold" />
+          <p className="text-gold text-xs uppercase tracking-widest font-mono">Cinematic Identity</p>
+        </div>
+        {loadingSummary ? (
+          <div className="space-y-2">
+            <div className="h-4 bg-surface-2 rounded animate-pulse w-full" />
+            <div className="h-4 bg-surface-2 rounded animate-pulse w-5/6" />
+            <div className="h-4 bg-surface-2 rounded animate-pulse w-4/6" />
           </div>
+        ) : profile.taste_summary ? (
           <p className="font-display text-lg text-text leading-relaxed italic">
             "{profile.taste_summary}"
           </p>
-        </div>
-      )}
+        ) : (
+          <p className="text-muted text-sm">Could not generate identity — try again later.</p>
+        )}
+      </div>
 
       {profile.genre_distribution?.length > 0 && (
         <div className="bg-surface border border-border rounded-2xl p-6">
@@ -211,10 +229,17 @@ export default function TasteProfile() {
         </div>
       )}
 
-      {profile.hidden_patterns && (
+      {(loadingSummary || profile.hidden_patterns) && (
         <div className="bg-surface border border-border rounded-2xl p-6">
           <h3 className="text-text font-semibold mb-3">Hidden Patterns</h3>
-          <p className="text-text-dim text-sm leading-relaxed">{profile.hidden_patterns}</p>
+          {loadingSummary ? (
+            <div className="space-y-2">
+              <div className="h-4 bg-surface-2 rounded animate-pulse w-full" />
+              <div className="h-4 bg-surface-2 rounded animate-pulse w-3/4" />
+            </div>
+          ) : (
+            <p className="text-text-dim text-sm leading-relaxed">{profile.hidden_patterns}</p>
+          )}
         </div>
       )}
 
