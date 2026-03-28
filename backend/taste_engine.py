@@ -2,6 +2,7 @@ from __future__ import annotations
 import asyncio
 import json
 from collections import defaultdict
+from datetime import datetime
 from sqlalchemy.orm import Session
 from database import WatchedFilm
 
@@ -18,13 +19,12 @@ def get_director_affinity(db: Session) -> list[dict]:
 
     result = []
     for director, data in director_data.items():
-        if len(data["ratings"]) >= 1:
-            result.append({
-                "director": director,
-                "film_count": len(data["ratings"]),
-                "avg_rating": round(sum(data["ratings"]) / len(data["ratings"]), 1),
-                "films": data["films"],
-            })
+        result.append({
+            "director": director,
+            "film_count": len(data["ratings"]),
+            "avg_rating": round(sum(data["ratings"]) / len(data["ratings"]), 1),
+            "films": data["films"],
+        })
 
     result.sort(key=lambda x: (x["film_count"], x["avg_rating"]), reverse=True)
     return result[:5]
@@ -109,7 +109,7 @@ def get_stats(db: Session) -> dict:
     top_genre = max(genre_counts, key=genre_counts.get) if genre_counts else None
 
     longest = max(films, key=lambda f: f.runtime or 0)
-    most_recent = max(films, key=lambda f: f.created_at or "")
+    most_recent = max(films, key=lambda f: f.created_at or datetime.min)
 
     return {
         "total_films": len(films),
@@ -123,7 +123,6 @@ def get_stats(db: Session) -> dict:
 
 
 async def get_hidden_patterns(db: Session, llm_fn) -> str | None:
-    """Use LLM to find common themes in highly-rated films."""
     high_rated = (
         db.query(WatchedFilm)
         .filter(WatchedFilm.user_rating >= 8.0)
@@ -155,7 +154,6 @@ async def get_hidden_patterns(db: Session, llm_fn) -> str | None:
 
 
 async def get_taste_summary(db: Session, llm_fn) -> str | None:
-    """Generate a cinematic identity paragraph."""
     top_films = get_top_films(db, limit=10)
     if len(top_films) < 3:
         return None
