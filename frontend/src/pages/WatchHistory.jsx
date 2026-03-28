@@ -57,7 +57,6 @@ export default function WatchHistory() {
         </div>
       </div>
 
-      {/* Filters */}
       <div className="flex flex-wrap items-center gap-3 mb-6 p-4 bg-surface border border-border rounded-xl">
         <AdjustmentsHorizontalIcon className="w-4 h-4 text-muted" />
 
