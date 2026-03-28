@@ -111,7 +111,6 @@ export default function TasteProfile() {
     <div className="p-8 max-w-6xl space-y-8">
       <h1 className="font-display text-3xl font-bold text-text">Taste Profile</h1>
 
-      {/* Cinematic Identity */}
       {profile.taste_summary && (
         <div className="bg-surface border border-gold/20 rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-3">
@@ -124,16 +123,13 @@ export default function TasteProfile() {
         </div>
       )}
 
-      {/* DNA Bar */}
       {profile.genre_distribution?.length > 0 && (
         <div className="bg-surface border border-border rounded-2xl p-6">
           <TasteDNABar genres={profile.genre_distribution} />
         </div>
       )}
 
-      {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Genre Donut */}
         {profile.genre_distribution?.length > 0 && (
           <div className="bg-surface border border-border rounded-2xl p-6">
             <h3 className="text-text font-semibold mb-4">Genre Distribution</h3>
@@ -159,7 +155,6 @@ export default function TasteProfile() {
           </div>
         )}
 
-        {/* Decade Bar */}
         {profile.decade_preference?.length > 0 && (
           <div className="bg-surface border border-border rounded-2xl p-6">
             <h3 className="text-text font-semibold mb-4">By Decade</h3>
@@ -176,7 +171,6 @@ export default function TasteProfile() {
         )}
       </div>
 
-      {/* Director Affinity */}
       {profile.director_affinity?.length > 0 && (
         <div className="bg-surface border border-border rounded-2xl p-6">
           <h3 className="text-text font-semibold mb-4">Director Affinity</h3>
@@ -187,7 +181,6 @@ export default function TasteProfile() {
                   <p className="text-text text-sm font-medium">{d.director}</p>
                   <p className="text-muted text-xs font-mono">{d.film_count} film{d.film_count !== 1 ? 's' : ''}</p>
                 </div>
-                {/* Rating bar */}
                 <div className="flex-1 bg-surface-2 rounded-full h-2">
                   <div
                     className="h-2 rounded-full bg-gold transition-all"
@@ -204,7 +197,6 @@ export default function TasteProfile() {
         </div>
       )}
 
-      {/* Hidden Patterns */}
       {profile.hidden_patterns && (
         <div className="bg-surface border border-border rounded-2xl p-6">
           <h3 className="text-text font-semibold mb-3">Hidden Patterns</h3>
@@ -212,7 +204,6 @@ export default function TasteProfile() {
         </div>
       )}
 
-      {/* Top 10 */}
       {profile.top_films?.length > 0 && (
         <div>
           <h3 className="text-text font-semibold mb-4">Your Top Films</h3>
