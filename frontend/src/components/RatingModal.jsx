@@ -61,13 +61,10 @@ export default function RatingModal({ film, onClose, onLogged }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Modal */}
       <div className="relative w-full max-w-2xl bg-surface border border-border rounded-2xl overflow-hidden animate-slide-up shadow-2xl">
         <div className="flex">
-          {/* Poster */}
           <div className="w-48 flex-shrink-0">
             <img
               src={data.poster_path || PLACEHOLDER}
@@ -77,7 +74,6 @@ export default function RatingModal({ film, onClose, onLogged }) {
             />
           </div>
 
-          {/* Content */}
           <div className="flex-1 p-6 flex flex-col">
             <button
               onClick={onClose}
@@ -125,7 +121,6 @@ export default function RatingModal({ film, onClose, onLogged }) {
               )}
             </div>
 
-            {/* Rating */}
             <div className="mt-4 pt-4 border-t border-border">
               <p className="text-text-dim text-xs uppercase tracking-widest mb-2 font-mono">Your Rating</p>
               <div className="flex items-center gap-1 mb-3">
