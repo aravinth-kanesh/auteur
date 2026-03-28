@@ -32,15 +32,13 @@ export default function FilmCard({ film, onDelete, onClick }) {
         <p className="text-muted text-xs mt-0.5 font-mono truncate">
           {film.year || '-'}{film.director ? ` · ${film.director}` : ''}
         </p>
-        {film.genres && film.genres.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
-            {film.genres.slice(0, 2).map((g) => (
-              <span key={g} className="text-xs bg-surface-2 text-muted px-2 py-0.5 rounded-full">
-                {g}
-              </span>
-            ))}
-          </div>
-        )}
+        <div className="flex flex-wrap gap-1 mt-2 min-h-[44px] content-start">
+          {film.genres?.slice(0, 2).map((g) => (
+            <span key={g} className="text-xs bg-surface-2 text-muted px-2 py-0.5 rounded-full h-fit">
+              {g}
+            </span>
+          ))}
+        </div>
       </div>
 
       {onDelete && (
