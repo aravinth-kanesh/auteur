@@ -151,7 +151,7 @@ export default function TasteProfile() {
                     <Cell key={entry.genre} fill={GENRE_COLORS[i % GENRE_COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip content={<CustomTooltip />} />
+                <Tooltip content={<CustomTooltip />} isAnimationActive={false} />
               </PieChart>
             </ResponsiveContainer>
           </div>
