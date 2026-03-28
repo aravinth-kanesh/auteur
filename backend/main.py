@@ -1,4 +1,5 @@
 from __future__ import annotations
+import asyncio
 import json
 from contextlib import asynccontextmanager
 from datetime import date
@@ -205,8 +206,10 @@ async def taste_profile(db: Session = Depends(get_db)):
     decades = get_decade_preference(db)
     top_films = get_top_films(db, 10)
 
-    hidden = await get_hidden_patterns(db, query_llm)
-    summary = await get_taste_summary(db, query_llm)
+    hidden, summary = await asyncio.gather(
+        get_hidden_patterns(db, query_llm),
+        get_taste_summary(db, query_llm),
+    )
 
     return TasteProfile(
         director_affinity=directors,
