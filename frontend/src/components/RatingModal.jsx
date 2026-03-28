@@ -139,7 +139,7 @@ export default function RatingModal({ film, onClose, onLogged }) {
                     )}
                   </button>
                 ))}
-                <span className="ml-2 text-gold font-mono font-bold text-lg">{displayRating}</span>
+                <span className="ml-2 text-gold font-mono font-bold text-lg">{rating}</span>
               </div>
 
               <textarea
