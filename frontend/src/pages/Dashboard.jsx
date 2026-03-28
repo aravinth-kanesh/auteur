@@ -22,13 +22,35 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 35000)
-    fetch('/api/taste', { signal: controller.signal })
+    // Use cached summary unless the film count has changed
+    const cached = JSON.parse(localStorage.getItem('auteur_taste_cache') || 'null')
+
+    fetch('/api/stats')
       .then((r) => r.json())
-      .then((data) => { setTasteSummary(data.taste_summary); setLoadingSummary(false) })
+      .then((stats) => {
+        const currentCount = stats.total_films ?? 0
+        if (cached && cached.filmCount === currentCount && cached.summary) {
+          setTasteSummary(cached.summary)
+          setLoadingSummary(false)
+          return
+        }
+
+        // Film count changed or no cache — re-fetch
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 60000)
+        fetch('/api/taste', { signal: controller.signal })
+          .then((r) => r.json())
+          .then((data) => {
+            setTasteSummary(data.taste_summary)
+            localStorage.setItem('auteur_taste_cache', JSON.stringify({
+              filmCount: currentCount,
+              summary: data.taste_summary,
+            }))
+          })
+          .catch(() => {})
+          .finally(() => { clearTimeout(timeout); setLoadingSummary(false) })
+      })
       .catch(() => setLoadingSummary(false))
-      .finally(() => clearTimeout(timeout))
   }, [])
 
   const hour = new Date().getHours()
