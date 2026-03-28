@@ -207,7 +207,7 @@ export default function ChatInterface() {
 
       {/* Input */}
       <div className="px-6 py-4 border-t border-border">
-        <div className="flex items-end gap-3 bg-surface border border-border rounded-2xl px-4 py-3 focus-within:border-gold/50 transition-colors">
+        <div className="flex items-center gap-3 bg-surface border border-border rounded-xl px-4 py-2.5 focus-within:border-gold/50 transition-colors">
           <textarea
             ref={inputRef}
             value={input}
@@ -215,10 +215,10 @@ export default function ChatInterface() {
             onKeyDown={handleKeyDown}
             placeholder="Ask about your taste..."
             rows={1}
-            className="flex-1 bg-transparent text-text placeholder-muted text-sm resize-none focus:outline-none max-h-32 leading-relaxed"
-            style={{ height: 'auto' }}
+            className="flex-1 bg-transparent text-text placeholder-muted text-sm resize-none focus:outline-none max-h-32 leading-normal"
+            style={{ height: '22px' }}
             onInput={(e) => {
-              e.target.style.height = 'auto'
+              e.target.style.height = '22px'
               e.target.style.height = `${e.target.scrollHeight}px`
             }}
           />
