@@ -65,11 +65,11 @@ export default function RatingModal({ film, onClose, onLogged }) {
 
       <div className="relative w-full max-w-2xl bg-surface border border-border rounded-2xl overflow-hidden animate-slide-up shadow-2xl">
         <div className="flex">
-          <div className="w-48 flex-shrink-0 bg-surface-2 flex items-start justify-center">
+          <div className="w-48 flex-shrink-0 self-start">
             <img
               src={data.poster_path || PLACEHOLDER}
               alt={data.title}
-              className="w-full object-contain"
+              className="w-full aspect-[2/3] object-cover"
               onError={(e) => { e.target.src = PLACEHOLDER }}
             />
           </div>
