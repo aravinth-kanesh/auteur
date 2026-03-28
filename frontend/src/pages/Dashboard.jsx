@@ -58,13 +58,11 @@ export default function Dashboard() {
 
   return (
     <div className="p-8 max-w-6xl">
-      {/* Header */}
       <div className="mb-8">
         <p className="text-muted text-sm font-mono">{greeting}</p>
         <h1 className="font-display text-4xl font-bold text-text mt-1">Your Cinema</h1>
       </div>
 
-      {/* Taste Summary */}
       {(loadingSummary || tasteSummary) && (
         <div className="mb-8 bg-surface border border-gold/20 rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-2">
@@ -84,12 +82,10 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Stats */}
       <div className="mb-8">
         <StatsPanel />
       </div>
 
-      {/* Recently Watched */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-text font-semibold text-lg">Recently Watched</h2>
@@ -125,7 +121,6 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Quick actions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Link
           to="/chat"
@@ -164,7 +159,6 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      {/* FAB */}
       <Link
         to="/log"
         className="fixed bottom-8 right-8 w-14 h-14 bg-gold rounded-full flex items-center justify-center shadow-lg hover:bg-gold-dim transition-colors z-30 group"
