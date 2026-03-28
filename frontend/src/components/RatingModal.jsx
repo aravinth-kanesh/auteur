@@ -96,40 +96,37 @@ export default function RatingModal({ film, onClose, onLogged }) {
               )}
 
               {loadingDetails ? (
-                <div className="mt-3 space-y-2">
-                  <div className="flex gap-1.5">
-                    <div className="h-6 w-16 bg-surface-2 rounded-full animate-pulse" />
-                    <div className="h-6 w-20 bg-surface-2 rounded-full animate-pulse" />
-                  </div>
-                  <div className="h-4 bg-surface-2 rounded animate-pulse w-full mt-3" />
-                  <div className="h-4 bg-surface-2 rounded animate-pulse w-5/6" />
-                  <div className="h-4 bg-surface-2 rounded animate-pulse w-4/6" />
-                  <div className="h-3 bg-surface-2 rounded animate-pulse w-1/2 mt-1" />
+                <div className="flex gap-1.5 mt-3">
+                  <div className="h-6 w-16 bg-surface-2 rounded-full animate-pulse" />
+                  <div className="h-6 w-20 bg-surface-2 rounded-full animate-pulse" />
+                  <div className="h-6 w-14 bg-surface-2 rounded-full animate-pulse" />
                 </div>
               ) : (
-                <>
-                  {data.genres && data.genres.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mt-3">
-                      {data.genres.map((g) => (
-                        <span key={g} className="text-xs bg-surface-2 text-text-dim px-2 py-0.5 rounded-full">
-                          {g}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                data.genres?.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    {data.genres.map((g) => (
+                      <span key={g} className="text-xs bg-surface-2 text-text-dim px-2 py-0.5 rounded-full">
+                        {g}
+                      </span>
+                    ))}
+                  </div>
+                )
+              )}
 
-                  {data.overview && (
-                    <p className="text-text-dim text-sm mt-3 line-clamp-3 leading-relaxed">
-                      {data.overview}
-                    </p>
-                  )}
+              {data.overview && (
+                <p className="text-text-dim text-sm mt-3 line-clamp-3 leading-relaxed">
+                  {data.overview}
+                </p>
+              )}
 
-                  {data.cast && data.cast.length > 0 && (
-                    <p className="text-muted text-xs mt-2 font-mono">
-                      {data.cast.slice(0, 3).join(' · ')}
-                    </p>
-                  )}
-                </>
+              {loadingDetails ? (
+                <div className="h-3 bg-surface-2 rounded animate-pulse w-2/3 mt-2" />
+              ) : (
+                data.cast?.length > 0 && (
+                  <p className="text-muted text-xs mt-2 font-mono">
+                    {data.cast.slice(0, 3).join(' · ')}
+                  </p>
+                )
               )}
             </div>
 
