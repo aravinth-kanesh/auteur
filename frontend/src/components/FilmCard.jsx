@@ -44,6 +44,7 @@ export default function FilmCard({ film, onDelete, onClick }) {
       {onDelete && (
         <button
           onClick={(e) => { e.stopPropagation(); onDelete(film) }}
+          aria-label={`Remove ${film.title}`}
           className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/70 backdrop-blur-sm rounded-lg p-1.5 text-muted hover:text-red-400"
         >
           <TrashIcon className="w-3.5 h-3.5" />

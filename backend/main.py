@@ -1,9 +1,12 @@
 from __future__ import annotations
 import asyncio
 import json
+import logging
 from contextlib import asynccontextmanager
-from datetime import date
+from datetime import date, datetime
 from typing import AsyncGenerator
+
+logger = logging.getLogger(__name__)
 
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -89,7 +92,7 @@ def _embed_and_store(film_dict: dict, user_rating: float, user_notes: str | None
         }
         add_film(embedding_id, vector, metadata)
     except Exception as e:
-        print(f"[Embedding error] {e}")
+        logger.warning("Embedding error: %s", e)
 
 
 @app.post("/api/log", response_model=WatchedFilmResponse)
@@ -190,7 +193,7 @@ def history(
     elif sort == "title":
         films.sort(key=lambda f: f.title.lower())
     else:
-        films.sort(key=lambda f: f.created_at or "", reverse=True)
+        films.sort(key=lambda f: f.created_at or datetime.min, reverse=True)
 
     return [_to_response(f) for f in films]
 

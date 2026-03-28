@@ -161,6 +161,7 @@ export default function Dashboard() {
 
       <Link
         to="/log"
+        aria-label="Log a film"
         className="fixed bottom-8 right-8 w-14 h-14 bg-gold rounded-full flex items-center justify-center shadow-lg hover:bg-gold-dim transition-colors z-30 group"
       >
         <PlusIcon className="w-6 h-6 text-bg" />

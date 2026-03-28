@@ -75,6 +75,7 @@ export default function RatingModal({ film, onClose, onLogged }) {
           <div className="flex-1 p-6 flex flex-col">
             <button
               onClick={onClose}
+              aria-label="Close"
               className="absolute top-4 right-4 text-muted hover:text-text transition-colors"
             >
               <XMarkIcon className="w-5 h-5" />
@@ -84,11 +85,15 @@ export default function RatingModal({ film, onClose, onLogged }) {
               <h2 className="font-display text-2xl font-bold text-text leading-tight">
                 {data.title}
               </h2>
-              <div className="flex items-center gap-3 mt-1 text-muted text-sm font-mono">
-                {data.year && <span>{data.year}</span>}
-                {data.runtime && <span>{data.runtime} min</span>}
-                {data.director && <span>Dir. {data.director}</span>}
-              </div>
+              {loadingDetails ? (
+                <div className="h-4 bg-surface-2 rounded animate-pulse w-52 mt-1" />
+              ) : (
+                <div className="flex items-center gap-3 mt-1 text-muted text-sm font-mono">
+                  {data.year && <span>{data.year}</span>}
+                  {data.runtime && <span>{data.runtime} min</span>}
+                  {data.director && <span>Dir. {data.director}</span>}
+                </div>
+              )}
 
               {loadingDetails ? (
                 <div className="mt-3 space-y-2">
