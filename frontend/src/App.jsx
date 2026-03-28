@@ -25,7 +25,6 @@ const NAV = [
 function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-56 bg-surface border-r border-border flex flex-col z-40">
-      {/* Logo */}
       <div className="px-6 py-7 border-b border-border">
         <div className="flex items-center gap-2">
           <FilmIcon className="w-5 h-5 text-gold" />
@@ -34,7 +33,6 @@ function Sidebar() {
         <p className="text-muted text-xs mt-1 font-mono">your cinema intelligence</p>
       </div>
 
-      {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {NAV.map(({ to, label, Icon, exact }) => (
           <NavLink
@@ -62,7 +60,6 @@ function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer */}
       <div className="px-6 py-4 border-t border-border">
         <p className="text-muted text-xs font-mono">v0.1.0</p>
       </div>
