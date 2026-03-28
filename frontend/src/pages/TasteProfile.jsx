@@ -16,7 +16,7 @@ function TasteDNABar({ genres }) {
   const total = genres.reduce((sum, g) => sum + g.count, 0)
   if (!total) return null
   return (
-    <div className="mt-4">
+    <div>
       <p className="text-muted text-xs uppercase tracking-widest font-mono mb-2">Taste DNA</p>
       <div className="flex rounded-full overflow-hidden h-4">
         {genres.slice(0, 8).map((g, i) => (
