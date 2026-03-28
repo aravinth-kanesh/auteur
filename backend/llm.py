@@ -19,7 +19,6 @@ STRICT RULES:
 
 
 async def _try_ollama(messages: list[dict], stream: bool = False):
-    """Attempt to use local Ollama instance."""
     import httpx
     payload = {
         "model": OLLAMA_MODEL,
@@ -52,11 +51,9 @@ async def _try_ollama(messages: list[dict], stream: bool = False):
 
 
 async def _try_anthropic(messages: list[dict], stream: bool = False):
-    """Fall back to Anthropic Claude API."""
     import anthropic
     client = anthropic.AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
 
-    # Split system from messages
     system = next((m["content"] for m in messages if m["role"] == "system"), SYSTEM_PROMPT)
     user_messages = [m for m in messages if m["role"] != "system"]
 
@@ -80,7 +77,6 @@ async def _try_anthropic(messages: list[dict], stream: bool = False):
 
 
 async def stream_llm(messages: list[dict]) -> AsyncGenerator[str, None]:
-    """Stream LLM response, trying Ollama first then Anthropic."""
     tried_ollama = False
     try:
         async for chunk in _try_ollama(messages, stream=True):
@@ -102,7 +98,6 @@ async def stream_llm(messages: list[dict]) -> AsyncGenerator[str, None]:
 
 
 async def query_llm(prompt: str, system: str = SYSTEM_PROMPT) -> str:
-    """Single non-streaming LLM call, tries Ollama then Anthropic."""
     messages = [{"role": "system", "content": system}, {"role": "user", "content": prompt}]
     try:
         result = ""
@@ -130,8 +125,6 @@ def build_rag_messages(
     taste_stats: dict,
     history: list[dict],
 ) -> list[dict]:
-    """Build the full message list for the RAG-powered chat."""
-    # Build context from retrieved films
     film_context_lines = []
     for film in retrieved_films:
         rating = film.get("user_rating", "?")
@@ -145,7 +138,6 @@ def build_rag_messages(
             line += f" | Your notes: {notes}"
         film_context_lines.append(line)
 
-    # Build taste stats summary
     stats_lines = []
     if taste_stats.get("total_films"):
         stats_lines.append(f"Total films logged: {taste_stats['total_films']}")
