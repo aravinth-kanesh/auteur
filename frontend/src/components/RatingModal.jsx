@@ -8,7 +8,6 @@ const PLACEHOLDER = 'https://via.placeholder.com/500x750/1A1A1A/6B6B6B?text=No+P
 export default function RatingModal({ film, onClose, onLogged }) {
   const [details, setDetails] = useState(null)
   const [rating, setRating] = useState(7)
-  const [hoverRating, setHoverRating] = useState(null)
   const [notes, setNotes] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [loadingDetails, setLoadingDetails] = useState(true)
@@ -57,7 +56,6 @@ export default function RatingModal({ film, onClose, onLogged }) {
 
   if (!film) return null
   const data = details || film
-  const displayRating = hoverRating ?? rating
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
@@ -65,11 +63,11 @@ export default function RatingModal({ film, onClose, onLogged }) {
 
       <div className="relative w-full max-w-2xl bg-surface border border-border rounded-2xl overflow-hidden animate-slide-up shadow-2xl">
         <div className="flex">
-          <div className="w-48 flex-shrink-0 self-start">
+          <div className="w-48 flex-shrink-0">
             <img
               src={data.poster_path || PLACEHOLDER}
               alt={data.title}
-              className="w-full aspect-[2/3] object-cover"
+              className="w-full h-full object-cover object-top"
               onError={(e) => { e.target.src = PLACEHOLDER }}
             />
           </div>
@@ -128,11 +126,9 @@ export default function RatingModal({ film, onClose, onLogged }) {
                   <button
                     key={n}
                     onClick={() => setRating(n)}
-                    onMouseEnter={() => setHoverRating(n)}
-                    onMouseLeave={() => setHoverRating(null)}
                     className="transition-transform hover:scale-110"
                   >
-                    {n <= displayRating ? (
+                    {n <= rating ? (
                       <StarIcon className="w-5 h-5 text-gold" />
                     ) : (
                       <StarOutlineIcon className="w-5 h-5 text-border" />
