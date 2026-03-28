@@ -1,8 +1,11 @@
 from __future__ import annotations
+import asyncio
 import json
 from collections import defaultdict
 from sqlalchemy.orm import Session
 from database import WatchedFilm
+
+LLM_TIMEOUT = 30  # seconds
 
 
 def get_director_affinity(db: Session) -> list[dict]:
@@ -145,7 +148,10 @@ async def get_hidden_patterns(db: Session, llm_fn) -> str | None:
         + "\n\nIn 2-3 sentences, identify the hidden common threads and patterns "
         "across these highly-rated films. Be specific and insightful."
     )
-    return await llm_fn(prompt)
+    try:
+        return await asyncio.wait_for(llm_fn(prompt), timeout=LLM_TIMEOUT)
+    except (asyncio.TimeoutError, Exception):
+        return None
 
 
 async def get_taste_summary(db: Session, llm_fn) -> str | None:
@@ -177,4 +183,7 @@ async def get_taste_summary(db: Session, llm_fn) -> str | None:
         "their tastes, what they value in film, their sensibility. "
         "Be evocative and specific. Write in second person ('You are...')."
     )
-    return await llm_fn(prompt)
+    try:
+        return await asyncio.wait_for(llm_fn(prompt), timeout=LLM_TIMEOUT)
+    except (asyncio.TimeoutError, Exception):
+        return None

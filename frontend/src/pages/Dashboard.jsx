@@ -22,10 +22,13 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
-    fetch('/api/taste')
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 35000)
+    fetch('/api/taste', { signal: controller.signal })
       .then((r) => r.json())
       .then((data) => { setTasteSummary(data.taste_summary); setLoadingSummary(false) })
       .catch(() => setLoadingSummary(false))
+      .finally(() => clearTimeout(timeout))
   }, [])
 
   const hour = new Date().getHours()
