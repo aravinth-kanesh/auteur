@@ -116,8 +116,9 @@ auteur/
 | GET | `/api/search?q=` | TMDB film search |
 | GET | `/api/film/{tmdb_id}` | Full film details |
 | POST | `/api/log` | Log a film with rating |
-| GET | `/api/history` | Watch history (filterable) |
-| GET | `/api/taste` | Full taste profile |
-| POST | `/api/chat` | Streaming RAG chat |
-| GET | `/api/stats` | Summary stats |
+| GET | `/api/history` | Watch history (filterable, sortable) |
+| GET | `/api/taste/stats` | Fast DB-only taste data (charts, directors, top films) |
+| GET | `/api/taste` | Full taste profile including LLM-generated identity |
+| POST | `/api/chat` | Streaming RAG chat response |
+| GET | `/api/stats` | Summary stats (total films, hours, averages) |
 | DELETE | `/api/film/{id}` | Remove a log entry |
