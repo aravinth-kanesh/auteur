@@ -10,7 +10,6 @@ export default function FilmCard({ film, onDelete, onClick }) {
       className="relative group rounded-xl overflow-hidden bg-surface border border-border cursor-pointer transition-all duration-200 hover:border-gold/40 hover:scale-[1.02] animate-fade-in"
       onClick={() => onClick && onClick(film)}
     >
-      {/* Poster */}
       <div className="relative poster-vignette aspect-[2/3] overflow-hidden">
         <img
           src={film.poster_path || PLACEHOLDER}
@@ -19,14 +18,12 @@ export default function FilmCard({ film, onDelete, onClick }) {
           onError={(e) => { e.target.src = PLACEHOLDER }}
           loading="lazy"
         />
-        {/* Rating badge */}
         <div className="absolute top-2 right-2 flex items-center gap-1 bg-black/70 backdrop-blur-sm rounded-lg px-2 py-1">
           <StarIcon className="w-3 h-3 text-gold" />
           <span className="text-gold font-mono text-xs font-medium">{rating?.toFixed(1)}</span>
         </div>
       </div>
 
-      {/* Info */}
       <div className="p-3">
         <h3 className="font-display text-sm font-semibold text-text leading-snug line-clamp-1">
           {film.title}
@@ -45,7 +42,6 @@ export default function FilmCard({ film, onDelete, onClick }) {
         )}
       </div>
 
-      {/* Delete button */}
       {onDelete && (
         <button
           onClick={(e) => { e.stopPropagation(); onDelete(film) }}
