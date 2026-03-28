@@ -91,7 +91,16 @@ export default function RatingModal({ film, onClose, onLogged }) {
               </div>
 
               {loadingDetails ? (
-                <div className="mt-3 h-4 bg-surface-2 rounded animate-pulse w-3/4" />
+                <div className="mt-3 space-y-2">
+                  <div className="flex gap-1.5">
+                    <div className="h-6 w-16 bg-surface-2 rounded-full animate-pulse" />
+                    <div className="h-6 w-20 bg-surface-2 rounded-full animate-pulse" />
+                  </div>
+                  <div className="h-4 bg-surface-2 rounded animate-pulse w-full mt-3" />
+                  <div className="h-4 bg-surface-2 rounded animate-pulse w-5/6" />
+                  <div className="h-4 bg-surface-2 rounded animate-pulse w-4/6" />
+                  <div className="h-3 bg-surface-2 rounded animate-pulse w-1/2 mt-1" />
+                </div>
               ) : (
                 <>
                   {data.genres && data.genres.length > 0 && (
