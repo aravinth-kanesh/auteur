@@ -20,6 +20,17 @@ export default function WatchHistory() {
   const [genre, setGenre] = useState('')
   const [allGenres, setAllGenres] = useState([])
 
+  useEffect(() => {
+    fetch('/api/history?sort=date')
+      .then((r) => r.json())
+      .then((data) => {
+        const genres = new Set()
+        data.forEach((f) => f.genres?.forEach((g) => genres.add(g)))
+        setAllGenres([...genres].sort())
+      })
+      .catch(() => {})
+  }, [])
+
   function fetchFilms() {
     setLoading(true)
     const params = new URLSearchParams({ sort })
@@ -28,14 +39,7 @@ export default function WatchHistory() {
     if (genre) params.set('genre', genre)
     fetch(`/api/history?${params}`)
       .then((r) => r.json())
-      .then((data) => {
-        setFilms(data)
-        // Collect all unique genres
-        const genres = new Set()
-        data.forEach((f) => f.genres?.forEach((g) => genres.add(g)))
-        setAllGenres([...genres].sort())
-        setLoading(false)
-      })
+      .then((data) => { setFilms(data); setLoading(false) })
       .catch(() => setLoading(false))
   }
 
